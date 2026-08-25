@@ -49,6 +49,16 @@ h1, h2, h3, strong, blockquote { font-family: 'Frank Ruhl Libre', serif; }
 .age-mark { display: flex; align-items: center; gap: 13px; margin: 30px 0; color: var(--gold); font-family: 'Frank Ruhl Libre', serif; font-size: 28px; font-weight: 700; }
 .age-mark i { width: 42px; height: 1px; background: var(--gold-pale); }
 .age-mark svg { width: 17px; fill: currentColor; }
+.photo-gallery { position: relative; z-index: 1; display: flex; justify-content: center; gap: 22px; margin: 6px 0 34px; }
+.photo-card { margin: 0; text-align: center; }
+.photo-card img { display: block; width: 132px; height: 160px; border-radius: 8px 42px 8px 42px; object-fit: cover; box-shadow: var(--shadow); }
+.photo-card-itai img { border: 3px solid var(--blue-soft); }
+.photo-card-agam img { border: 3px solid var(--berry-soft); }
+.photo-card figcaption { margin-top: 9px; color: var(--muted); font-family: 'Frank Ruhl Libre', serif; font-size: 16px; font-weight: 600; }
+
+.music-toggle { position: fixed; z-index: 10; right: 20px; bottom: 20px; display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid var(--gold-pale); border-radius: 50%; color: var(--gold); background: rgba(255,255,255,.88); box-shadow: var(--shadow); }
+.music-toggle svg { width: 20px; }
+
 .gate-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.07fr 0.93fr; gap: 18px; width: min(100%, 820px); }
 .gate { position: relative; min-height: 190px; padding: 28px; overflow: hidden; border: 0; border-radius: 8px 42px 8px 42px; color: white; box-shadow: var(--shadow); text-align: right; transition: transform 180ms ease, box-shadow 180ms ease; }
 .gate:hover { transform: translateY(-5px) rotate(-0.4deg); box-shadow: 0 32px 80px rgba(67, 48, 31, 0.2); }
@@ -195,6 +205,7 @@ h1, h2, h3, strong, blockquote { font-family: 'Frank Ruhl Libre', serif; }
 @media print {
   @page { size: A4; margin: 15mm; }
   body { background: white; }
+  .no-print { display: none !important; }
   body.print-sign .site-shell { display: none !important; }
   body.print-sign .print-sign { display: grid; min-height: 250mm; place-items: center; align-content: center; color: var(--ink); text-align: center; }
   body.print-sign .print-sign p { margin: 0; color: var(--gold); font-size: 18px; font-weight: 700; letter-spacing: .18em; }
@@ -203,7 +214,7 @@ h1, h2, h3, strong, blockquote { font-family: 'Frank Ruhl Libre', serif; }
   body.print-sign .print-sign img { width: 280px; margin: 42px; }
   body.print-sign .print-sign strong { font-size: 27px; }
   body.print-admin .site-shell { overflow: visible; }
-  body.print-admin .screen:not(.admin-screen), body.print-admin .no-print { display: none !important; }
+  body.print-admin .screen:not(.admin-screen) { display: none !important; }
   body.print-admin .admin-screen { display: block; width: 100%; min-height: auto; padding: 0; }
   body.print-admin .blessings-grid { columns: 2; }
   body.print-admin .blessing-card { background: white; }

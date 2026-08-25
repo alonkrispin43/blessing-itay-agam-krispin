@@ -5,6 +5,8 @@ import {
   Heart,
   Home,
   LockKeyhole,
+  Pause,
+  Play,
   Printer,
   QrCode,
   RefreshCw,
@@ -13,7 +15,7 @@ import {
   X,
 } from 'lucide-react'
 import QRCode from 'qrcode'
-import { type FormEvent, useEffect, useMemo, useState } from 'react'
+import { type FormEvent, useEffect, useMemo, useRef, useState } from 'react'
 import { ADMIN_PIN } from './google-config'
 import { fetchBlessingsFromSheet, submitToGoogleForm } from './lib/google'
 import type { Blessing, Child } from './types'
@@ -49,6 +51,8 @@ export default function App() {
   const [shareUrl, setShareUrl] = useState('')
   const [qrDataUrl, setQrDataUrl] = useState('')
   const [copied, setCopied] = useState(false)
+  const [musicPlaying, setMusicPlaying] = useState(false)
+  const audioRef = useRef<HTMLAudioElement>(null)
 
   const activeChild = children[selectedChild]
   const visibleBlessings = useMemo(
@@ -143,6 +147,17 @@ export default function App() {
     }
   }
 
+  function toggleMusic() {
+    const audio = audioRef.current
+    if (!audio) return
+    if (musicPlaying) {
+      audio.pause()
+    } else {
+      void audio.play()
+    }
+    setMusicPlaying(!musicPlaying)
+  }
+
   function print(mode: 'admin' | 'sign') {
     document.body.classList.add(`print-${mode}`)
     window.setTimeout(() => window.print(), 100)
@@ -178,6 +193,17 @@ export default function App() {
               <Heart aria-hidden="true" />
               <i />
               <span>12</span>
+            </div>
+
+            <div className="photo-gallery" aria-label="תמונות של איתי ואגם">
+              <figure className="photo-card photo-card-itai">
+                <img src={`${import.meta.env.BASE_URL}itai.jpg`} alt="איתי" />
+                <figcaption>איתי</figcaption>
+              </figure>
+              <figure className="photo-card photo-card-agam">
+                <img src={`${import.meta.env.BASE_URL}agam.jpg`} alt="אגם" />
+                <figcaption>אגם</figcaption>
+              </figure>
             </div>
 
             <div className="gate-grid">
@@ -357,6 +383,17 @@ export default function App() {
           </section>
         )}
       </main>
+
+      <button
+        className="music-toggle no-print"
+        type="button"
+        onClick={toggleMusic}
+        aria-pressed={musicPlaying}
+        aria-label={musicPlaying ? 'השתקת המוזיקה' : 'הפעלת מוזיקה'}
+      >
+        {musicPlaying ? <Pause aria-hidden="true" /> : <Play aria-hidden="true" />}
+      </button>
+      <audio ref={audioRef} loop preload="none" src={`${import.meta.env.BASE_URL}music.mp3`} />
 
       <section className="print-sign" aria-hidden="true">
         <p>כתבו לנו ברכה</p>
