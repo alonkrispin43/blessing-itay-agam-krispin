@@ -16,7 +16,7 @@ export const GOOGLE_FORM_ENTRIES = {
 
 // The CSV export URL of the Sheet linked to the form, published to the web.
 // File > Share > Publish to web > select the responses sheet > CSV.
-export const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJ4UOuJQMVOH4THSEf4ksrwL1jzAs1S-8HVNW9Wc24iUcosEZ8-64TlIineVL1JYGhocN25kmkEh2u/pub?output=csv'
+export const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJdHVO_MZgizN9kJB_oCNfsRlmHVqRe_vDHCrF7TP-T6CnfFVmXFDG4hXXdj34rvWQdq9397LwJeFM/pub?output=csv'
 
 // Soft client-side gate for the parent dashboard. This is NOT real security:
 // the published CSV above is link-accessible to anyone who has (or guesses) the URL,
