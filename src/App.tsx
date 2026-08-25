@@ -161,9 +161,9 @@ export default function App() {
             <div className="hero-copy">
               <p className="eyebrow">חוגגים יחד</p>
               <div className="title-lockup">
-                <span>איתי</span>
+                <span>איתי קריספין</span>
                 <Sparkles aria-hidden="true" />
-                <span>אגם</span>
+                <span>אגם קריספין</span>
               </div>
               <h1>ברכות לבר ולבת המצווה</h1>
               <p className="event-pill">6.6.2027 · אולמי אליבה, אופקים</p>
