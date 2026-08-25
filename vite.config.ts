@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite'
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
-import netlify from '@netlify/vite-plugin-tanstack-start'
 
 const config = defineConfig({
   plugins: [
@@ -11,10 +9,13 @@ const config = defineConfig({
       projects: ['./tsconfig.json'],
     }),
     tailwindcss(),
-    netlify(),
-    tanstackStart(),
     viteReact(),
   ],
+  // GitHub Pages serves project sites from a /<repo-name>/ subpath, so every
+  // asset URL Vite emits needs that prefix to resolve correctly.
+  // If you move this to a custom domain (or a user/org root page, <username>.github.io),
+  // change this back to '/' since the site would then be served from the domain root.
+  base: '/blessing-itay-agam-krispin/',
 })
 
 export default config

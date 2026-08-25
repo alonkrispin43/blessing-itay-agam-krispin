@@ -1,4 +1,3 @@
-import { createFileRoute } from '@tanstack/react-router'
 import {
   ArrowLeft,
   Check,
@@ -15,20 +14,12 @@ import {
 } from 'lucide-react'
 import QRCode from 'qrcode'
 import { type FormEvent, useEffect, useMemo, useState } from 'react'
+import { ADMIN_PIN } from './google-config'
+import { fetchBlessingsFromSheet, submitToGoogleForm } from './lib/google'
+import type { Blessing, Child } from './types'
 
-export const Route = createFileRoute('/')({ component: CelebrationPage })
-
-type Child = 'itai' | 'agam'
 type Screen = 'home' | 'form' | 'thanks' | 'admin'
 type Filter = 'all' | Child
-
-type Blessing = {
-  id: number
-  child: Child
-  guestName: string
-  message: string
-  createdAt: string
-}
 
 const children = {
   itai: {
@@ -43,7 +34,7 @@ const children = {
   },
 } satisfies Record<Child, { name: string; role: string; invitation: string }>
 
-function CelebrationPage() {
+export default function App() {
   const [screen, setScreen] = useState<Screen>('home')
   const [selectedChild, setSelectedChild] = useState<Child>('itai')
   const [guestName, setGuestName] = useState('')
@@ -100,16 +91,11 @@ function CelebrationPage() {
 
     setFormStatus('sending')
     try {
-      const response = await fetch('/api/blessings', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          child: selectedChild,
-          guestName: guestName.trim(),
-          message: message.trim(),
-        }),
+      await submitToGoogleForm({
+        child: selectedChild,
+        guestName: guestName.trim(),
+        message: message.trim(),
       })
-      if (!response.ok) throw new Error('Unable to save blessing')
       setFormStatus('idle')
       navigate('thanks')
     } catch {
@@ -117,26 +103,12 @@ function CelebrationPage() {
     }
   }
 
-  async function loadBlessings(adminPin = pin) {
+  async function loadBlessings() {
     setAdminStatus('loading')
     setAdminError('')
     try {
-      const response = await fetch('/api/blessings', {
-        headers: { 'x-admin-pin': adminPin },
-      })
-      if (response.status === 401) {
-        setAdminError('קוד הכניסה אינו נכון. נסו שוב.')
-        setAdminStatus('idle')
-        return false
-      }
-      if (response.status === 503) {
-        setAdminError('כניסת ההורים עדיין לא הוגדרה באתר.')
-        setAdminStatus('idle')
-        return false
-      }
-      if (!response.ok) throw new Error('Unable to load blessings')
-      const data = (await response.json()) as { blessings: Blessing[] }
-      setBlessings(data.blessings)
+      const data = await fetchBlessingsFromSheet()
+      setBlessings(data)
       setAdminStatus('idle')
       return true
     } catch {
@@ -148,8 +120,13 @@ function CelebrationPage() {
 
   async function enterAdmin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const authenticated = await loadBlessings(pin)
-    if (authenticated) {
+    if (pin !== ADMIN_PIN) {
+      setAdminError('קוד הכניסה אינו נכון. נסו שוב.')
+      return
+    }
+    setAdminError('')
+    const loaded = await loadBlessings()
+    if (loaded) {
       setPinOpen(false)
       navigate('admin')
     }
