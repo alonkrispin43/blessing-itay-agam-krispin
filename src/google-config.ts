@@ -21,4 +21,4 @@ export const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/RE
 // Soft client-side gate for the parent dashboard. This is NOT real security:
 // the published CSV above is link-accessible to anyone who has (or guesses) the URL,
 // so this PIN only hides the dashboard from casual visitors, it does not protect the data.
-export const ADMIN_PIN = '0000'
+export const ADMIN_PIN = '3296'
