@@ -166,7 +166,7 @@ export default function App() {
                 <span>אגם קריספין</span>
               </div>
               <h1>ברכות לבר ולבת המצווה</h1>
-              <p className="event-pill">6.6.2027 · אולמי אליבה, אופקים</p>
+              <p className="event-pill">6.6.2027 · אולמי אליבא, אופקים</p>
               <p className="hero-subtitle">
                 כתבו כמה מילים לחתן ולכלת השמחה. הברכות שלכם נשמרות עבורם כמזכרת מהיום המיוחד.
               </p>
@@ -361,7 +361,7 @@ export default function App() {
       <section className="print-sign" aria-hidden="true">
         <p>כתבו לנו ברכה</p>
         <h2>איתי ואגם קריספין</h2>
-        <span>בר ובת מצווה · 6.6.2027 · אולמי אליבה, אופקים</span>
+        <span>בר ובת מצווה · 6.6.2027 · אולמי אליבא, אופקים</span>
         {qrDataUrl && <img src={qrDataUrl} alt="" />}
         <strong>סרקו את הקוד ושלחו לנו כמה מילים מהלב</strong>
       </section>
