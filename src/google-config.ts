@@ -5,18 +5,18 @@
 // Take the form's "Get pre-filled link" URL, drop everything after "viewform",
 // then replace "viewform" with "formResponse".
 // Example: https://docs.google.com/forms/d/e/1FAIpQLSf.../formResponse
-export const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse'
+export const GOOGLE_FORM_ACTION_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfrnbanK8roQkmXLKLNiLxUNQSnP1dfQ2nMZQBnNucjymVcOA/formResponse'
 
 // The entry.NNNNNNNNN field name for each question, read off the "Get pre-filled link" URL.
 export const GOOGLE_FORM_ENTRIES = {
-  child: 'entry.REPLACE_WITH_CHILD_ENTRY_ID',
-  guestName: 'entry.REPLACE_WITH_GUEST_NAME_ENTRY_ID',
-  message: 'entry.REPLACE_WITH_MESSAGE_ENTRY_ID',
+  child: 'entry.933029908',
+  guestName: 'entry.1160594916',
+  message: 'entry.1075355366',
 }
 
 // The CSV export URL of the Sheet linked to the form, published to the web.
 // File > Share > Publish to web > select the responses sheet > CSV.
-export const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/REPLACE_WITH_SHEET_ID/pub?output=csv'
+export const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRJ4UOuJQMVOH4THSEf4ksrwL1jzAs1S-8HVNW9Wc24iUcosEZ8-64TlIineVL1JYGhocN25kmkEh2u/pub?output=csv'
 
 // Soft client-side gate for the parent dashboard. This is NOT real security:
 // the published CSV above is link-accessible to anyone who has (or guesses) the URL,

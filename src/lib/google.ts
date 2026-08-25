@@ -33,12 +33,14 @@ export async function fetchBlessingsFromSheet(): Promise<Blessing[]> {
   if (!response.ok) throw new Error('Unable to load blessings sheet')
 
   const rows = parseCsv(await response.text())
-  const [, ...dataRows] = rows // drop header row: Timestamp, Child, GuestName, Message
+  const [, ...dataRows] = rows // drop header row: Timestamp, Email address, Child, GuestName, Message
 
   return dataRows
     .filter((row) => row.some((cell) => cell.trim() !== ''))
     .map((row, index) => {
-      const [timestamp, childLabel, guestName, message] = row
+      // The form has "Collect email addresses" enabled, which inserts an extra
+      // column between the timestamp and the actual question answers.
+      const [timestamp, , childLabel, guestName, message] = row
       return {
         id: index,
         child: CHILD_LABEL_TO_ID[(childLabel ?? '').trim()] ?? 'itai',
