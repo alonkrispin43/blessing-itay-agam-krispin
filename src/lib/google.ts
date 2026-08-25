@@ -46,10 +46,21 @@ export async function fetchBlessingsFromSheet(): Promise<Blessing[]> {
         child: CHILD_LABEL_TO_ID[(childLabel ?? '').trim()] ?? 'itai',
         guestName: (guestName ?? '').trim(),
         message: (message ?? '').trim(),
-        createdAt: (timestamp ?? '').trim(),
+        createdAt: parseSheetTimestamp((timestamp ?? '').trim()),
       } satisfies Blessing
     })
     .reverse() // newest first, matching the previous server-side desc(createdAt) ordering
+}
+
+// Google Sheets exports the form's timestamp as "DD/MM/YYYY HH:MM:SS" (day first,
+// matching the sheet's locale). The native Date constructor assumes MM/DD/YYYY for
+// that shape, misreads the day as an invalid month, and produces an Invalid Date —
+// which then throws when formatted. Parse the components explicitly instead.
+function parseSheetTimestamp(value: string): string {
+  const match = value.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2})$/)
+  if (!match) return value
+  const [, day, month, year, hour, minute, second] = match
+  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}T${hour.padStart(2, '0')}:${minute}:${second}`
 }
 
 // Minimal CSV parser: handles quoted fields, escaped quotes ("") inside them,
